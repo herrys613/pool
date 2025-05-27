@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leasing Deals</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    html,
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #292929;
+      background: #EEEEEE;
+      box-sizing: border-box;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #333;
+      box-sizing: border-box;
+      color: white;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo img {
+      width: 100px;
+      height: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin-left: auto;
+    }
+
+    .nav-links li {
+      margin: 0px 15px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #007bff;
+    }
+
+    .main-container {
+      background: -#007bff;
+      margin: 0px 0px 0px 0px;
+      padding: 15px 0px;
+      position: relative;
+      flex: 1;
+    }
+
+    .container {
+      background: -#007bff;
+      max-width: 1200px;
+      justify-content: space-around;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
+
+    .pool-card {
+      position: relative;
+      background: #fff;
+      width: 300px;
+      border-radius: 10px;
+      margin: 15px;
+      padding: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .pool-card:hover {
+      transform: scale(1.05);
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .hot-deal-label {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background-color: #e60000;
+      color: white;
+      padding: 5px 10px;
+      font-weight: bold;
+      font-size: 11px;
+      border-radius: 10px 0 10px 0;
+      white-space: nowrap;
+    }
+
+    .pool-card img {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .pool-name {
+      background: -#007bff;
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 0 0 0.5px currentColor;
+      text-align: left;
+      margin: 8px 10px;
+      padding: 0px 0px;
+      cursor: pointer;
+    }
+
+    .pool-name::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 23px;
+      background: #007bff;
+      margin-right: 8px;
+      border-radius: 2px;
+      vertical-align: middle;
+    }
+
+    .details {
+      background: -#007bff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 15px 0px;
+      padding: 0px 0px;
+      font-size: 13px;
+    }
+
+    .details {
+      display: flex;
+      gap: 0px;
+      justify-content: space-around;
+    }
+
+    .detail-box {
+      background: -#007bff;
+      text-align: center;
+      flex: 1;
+    }
+
+    .detail-box .icon {
+      font-size: 18px;
+      margin-bottom: 4px;
+      color: #007bff;
+    }
+
+    .pool-card .details>div>p:first-of-type {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 4px 0;
+      color: #333;
+    }
+
+    .pool-card .details>div>p:nth-of-type(2) {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0px 0;
+    }
+
+    .details div {
+      background: -#007bff;
+      flex: 1;
+      text-align: center;
+      position: relative;
+      /* Required for ::after to work */
+      padding: 0px 0px;
+      /* Adds spacing */
+    }
+
+    .detail-box div:not(:last-child)::after {
+      content: "";
+      display: block;
+      width: 1px;
+      /* Border thickness */
+      height: 18px;
+      /* Limit border height */
+      background: #ccc;
+      /* Border color */
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      /* Centers the border */
+    }
+
+    .price {
+      background: -#007bff;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: left;
+      margin: 20px 10px 10px 10px;
+      padding: 0px 0px;
+    }
+
+    .book-btn {
+      background: #007bff;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 0px 0px;
+      float: right;
+    }
+
+    .book-btn:hover {
+      background: #0056b3;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(1px);
+      z-index: 1000;
+    }
+
+    .modal-content {
+      position: relative;
+      /* for close button */
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      max-height: 90vh;
+      /* limit height */
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      overflow-y: auto;
+      /* make scrollable */
+      padding: 0px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-scrollable {
+      position: relative;
+      padding: 20px;
+      overflow-y: auto;
+      max-height: 80vh;
+      box-sizing: border-box;
+    }
+
+    .modal-scrollable::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-scrollable::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 3px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      /* position relative to nearest positioned parent */
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 10;
+    }
+
+    .modal img {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .modal h2 {
+      margin: 5px 0px 10px;
+      font-size: 21px;
+    }
+
+    .modal h3 {
+      background: -#007bff;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .modal ul {
+      padding-left: 20px;
+    }
+
+    .modal ul li {
+      margin-bottom: 5px;
+    }
+
+    .info-container {
+      background: -#007bff;
+      margin: 40px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info-item {
+      background: -#007bff;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .icon {
+      font-size: 20px;
+      margin-top: 4px;
+      color: #007bff;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #666;
+      margin-top: 3px;
+    }
+
+    #modal-features {
+      background: -#007bff;
+      font-size: 13px;
+      text-align: left;
+      column-count: 2;
+      column-gap: 20px;
+      /* Space between columns */
+      margin: 0px 0px 20px 0px;
+    }
+
+    #modal-color {
+      background: -#007bff;
+      font-size: 13px;
+      margin: 0px 0px 0px 0px;
+    }
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px 0px 10px 0px;
+      margin: 0px 0px 0px 0px;
+      position: relative;
+    }
+
+    .footer .links a {
+      color: white;
+      font-size: 15px;
+      text-decoration: none;
+      margin: 0 15px;
+    }
+
+    .footer .social-icons {
+      margin-top: 20px;
+    }
+
+    .footer .social-icons a {
+      color: white;
+      margin: 0 10px;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    /* Responsive Navigation */
+    @media (max-width: 768px) {
+      .header {
+        padding: 20px 20px;
+        z-index: 1000;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 25px;
+        left: 0;
+        width: 100%;
+        background: #333;
+        text-align: center;
+        align-items: center;
+        height: auto;
+        padding: 10px 0;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .nav-links li {
+        padding: 10px 0;
+        width: 100%;
+      }
+
+      .hamburger {
+        font-size: 25px;
+        cursor: pointer;
+        margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 25px;
+        /* Adjust size */
+        height: 20px;
+        /* Adjust height */
+        position: relative;
+        /* So we can absolutely position bars */
+      }
+
+      .hamburger .bar {
+        background-color: white;
+        height: 3px;
+        /* Adjust thickness */
+        width: 100%;
+        transition: all 0.3s ease;
+        position: absolute;
+        /* Allow absolute positioning */
+        left: 0;
+      }
+
+      /* Positioning for the bars */
+      .hamburger .bar:nth-child(1) {
+        top: 0;
+      }
+
+      .hamburger .bar:nth-child(2) {
+        top: 8px;
+      }
+
+      .hamburger .bar:nth-child(3) {
+        top: 16px;
+      }
+
+      /* When the hamburger is in 'open' state (when menu is displayed) */
+      .hamburger.open .bar:nth-child(1) {
+        transform: rotate(45deg);
+        /* Top bar rotates */
+        top: 8px;
+        /* Moves it to the center */
+      }
+
+      .hamburger.open .bar:nth-child(2) {
+        opacity: 0;
+        /* Middle bar disappears */
+      }
+
+      .hamburger.open .bar:nth-child(3) {
+        transform: rotate(-45deg);
+        /* Bottom bar rotates */
+        top: 8px;
+        /* Moves it to the center */
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="logo">
+      <img src="images/logo.png" alt="Logo">
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact-us.html">Contact Us</a></li>
+      <li><a href="admin.html">Admin Login</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </header>
+
+  <div class="main-container">
+
+    <div class="container" id="pool-container">
+      <!-- Car posts will be dynamically inserted here -->
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="pool-modal">
+    <div class="modal-content">
+
+      <div class="modal-scrollable">
+        <button class="close-modal" onclick="closeModal()">✖</button>
+        <h2 id="modal-title" class="modal-title"></h2>
+        <img id="modal-image2" src="" alt="Pool Image" class="modal-image">
+        <div class="modal-info">
+          <h3><i class="fas fa-water icon"></i> Pool Features</h3>
+          <ul id="modal-features" class="feature-list"></ul>
+
+          <div class="info-container">
+            <div class="info-item">
+              <i class="fas fa-credit-card icon"></i>
+              <div>
+                <div class="title">Payment Method</div>
+                <p class="subtitle" id="modal-payment"></p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-info-circle icon"></i>
+              <div>
+                <div class="title">Rules & Notes</div>
+                <p class="subtitle" id="modal-color"></p>
+              </div>
+            </div>
+            <div>
+              </div>
+              <h3>Location</h3>
+              <div id="modal-map" style="height: 200px; width: 100%; border-radius: 8px; overflow: hidden;">
+                <iframe id="map-frame" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="links">
+      <a href="#">Home</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact-us.html">Contact Us</a>
+    </div>
+    <div class="social-icons">
+      <a href="https://wa.me/9175837073" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+    <p style="font-size: 12px;">&copy; 2025 Driveway. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const pools = [{
+        name: "281 County Rte 105",
+        address: "281 County Rte 105, Highland, NY",
+        image1: "https://premierpoolsandspas.com/wp-content/uploads/2024/04/Cleveland-Pool-Builders-Premier-Pools-Spas-scaled.webp",
+        image2: "https://tse2.mm.bing.net/th/id/OIP.9aWBSyCi1plPA6oB5JcI3QHaE8?cb=iwc2&rs=1&pid=ImgDetMain",
+        label: "Top Rated",
+        capacity: "8 Guests",
+        availability: "3PM - 8PM",
+        type: "Outdoor",
+        price: "$100",
+        features: ["15 ft by 36 ft", "4 ft to 8.5 ft deep", "Restroom available", "Heated Pool", ],
+        payment: "Cash or Quickpay",
+        color: "",
+        whatsapp: "9173334455"
+      },
+      {
+        name: "281 County Rte 105",
+        image1: "https://premierpoolsandspas.com/wp-content/uploads/2024/04/Cleveland-Pool-Builders-Premier-Pools-Spas-scaled.webp",
+        image2: "https://performancedrive.com.au/wp-content/uploads/2020/02/2020-BMW-X5-M-Competition-interior.jpg",
+        label: "",
+        capacity: "8 Guests",
+        availability: "3PM - 8PM",
+        type: "Outdoor",
+        price: "$100",
+        features: ["Bluetooth", "Backup Camera", "Android Auto", "Sunroof", "Keyless Entry", ],
+        additional: "None",
+        color: "Blue",
+        whatsapp: "9173334455"
+      },
+      {
+        name: "281 County Rte 105",
+        image1: "https://premierpoolsandspas.com/wp-content/uploads/2024/04/Cleveland-Pool-Builders-Premier-Pools-Spas-scaled.webp",
+        image2: "https://performancedrive.com.au/wp-content/uploads/2020/02/2020-BMW-X5-M-Competition-interior.jpg",
+        label: "",
+        capacity: "8 Guests",
+        availability: "3PM - 8PM",
+        type: "Outdoor",
+        price: "$100",
+        features: ["Bluetooth", "Backup Camera", "Android Auto", "Sunroof", "Keyless Entry", ],
+        additional: "None",
+        color: "Blue",
+        whatsapp: "9173334455"
+      }
+    ];
+    const poolContainer = document.getElementById("pool-container");
+    const modal = document.getElementById("pool-modal");
+    // Generate Car Cards
+    function generatepools() {
+      poolContainer.innerHTML = pools.map((pool, index) => `
+    <div class="pool-card">
+      <div class="image-container">
+        <img src="${pool.image1}" alt="${pool.name} Image">
+        ${pool.label?.trim() ? `<div class="hot-deal-label">${pool.label}</div>` : ""}
+      </div>
+      <p class="pool-name" onclick="openModal(${index})">${pool.name}</p>
+      <div class="details">
+       <div class="detail-box">
+    <div class="icon"><i class="fas fa-users"></i></div>
+    <p>${pool.capacity}</p>
+  </div>
+        <div class="detail-box">
+    <div class="icon"><i class="fas fa-clock"></i></div>
+    <p>${pool.availability}</p>
+  </div>
+        <div class="detail-box">
+    <div class="icon"><i class="fas fa-water-ladder"></i></div>
+    <p>${pool.type}</p>
+  </div>
+      </div>
+      <div>
+        <p class="price">
+          ${pool.price}<span style="font-size: 15px; color:#292929;"> / Hour</span>
+          <a href="https://wa.me/${pool.whatsapp}?text=I%20am%20interested%20in%20leasing%20the%20${encodeURIComponent(pool.name)}"
+            target="_blank" class="book-btn">Book Now</a>
+        </p>
+      </div>
+    </div>
+  `).join("");
+    }
+    // Modal Functions
+    window.openModal = function(index) {
+      const pool = pools[index];
+      document.getElementById("modal-title").innerText = pool.name;
+      document.getElementById("modal-image2").src = pool.image2 || "";
+      document.getElementById("modal-features").innerHTML = (pool.features || []).map(f => `<li>${f}</li>`).join("");
+      document.getElementById("modal-payment").innerText = pool.payment || "N/A";
+      document.getElementById("modal-color").innerText = pool.color || "N/A";
+      // Map embed using address
+      const encodedAddress = encodeURIComponent(pool.address || "");
+      document.getElementById("map-frame").src = `https://www.google.com/maps?q=${encodedAddress}&output=embed`;
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+    window.closeModal = function() {
+      modal.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+    // Initial load
+    generatepools(pools);
+    // Hamburger menu toggle
+    document.getElementById("hamburger").addEventListener("click", function() {
+      document.querySelector(".nav-links").classList.toggle("show");
+    });
+
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      navLinks.classList.toggle('show');
+      hamburger.classList.toggle('open'); // Toggle the open state for the hamburger icon
+    }
+  </script>
+
+</body>
+
+</html>
